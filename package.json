@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "parcel static/index.html",
-    "build": "parcel build static/index.html"
+    "start": "parcel static/index.html static/playground/index.html",
+    "build": "parcel build static/index.html static/playground/index.html"
   },
   "staticFiles": {
     "staticPath": "book/book",

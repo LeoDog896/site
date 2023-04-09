@@ -60,7 +60,7 @@
     </div>
     <img class="logo logo-bloom" src="assets/pest-logo.svg">
     <img class="logo" src="assets/pest-logo.svg">
-    <a class="button-try" href="#editor">Try it here!</a>
+    <a class="button-try" href="/playground">Playground</a>
     <div class="banner-features"></div>
     <div class="content features">
       <div class="illustration">
@@ -200,40 +200,5 @@
         </div>
       </div>
     </div>
-    <div class="content editor">
-      <a name="editor">
-        <h2>Editor</h2>
-      </a>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <button id="modeBtn">Wide Mode</button>
-          <button id="formatBtn">Format</button>
-        </div>
-        <div>
-          <p id="shareLinkWarning" style="display:none"></p>
-          <button id="shareLinkBtn">Copy share link</button>
-        </div>
-      </div>
-      <div class="editor-grid">
-        <textarea rows="15" class="editor-grammar grammar-area"></textarea>
-        <div class="editor-input">
-          <textarea rows="3" placeholder="Input" class="editor-input-text"></textarea>
-          <select disabled class="editor-input-select">
-            <option>...</option>
-          </select>
-        </div>
-        <div class="output-wrapper">
-          <textarea rows="7" placeholder="Output" readonly class="editor-output"></textarea>
-        </div>
-      </div>
-    </div>
-    <script src="raw:codemirror/lib/codemirror.js"></script>
-    <script src="raw:codemirror/addon/display/placeholder.js"></script>
-    <script src="raw:codemirror/addon/lint/lint.js"></script>
-    <link rel="stylesheet" href="codemirror/addon/lint/lint.css">
-    <script src="raw:codemirror/addon/mode/simple.js"></script>
-    <link rel="stylesheet" href="codemirror/lib/codemirror.css">
-
-    <script type="module" src="scripts/editor.ts"></script>
   </body>
 </html>

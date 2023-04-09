@@ -6,11 +6,7 @@ import {initShareButton} from "./shareButton";
 
 let loaded = false;
 
-const editorDom = document.querySelector<HTMLLinkElement>(".editor")!;
-const gridDom = document.querySelector<HTMLDivElement>(".editor-grid")!;
-const inputDom = document.querySelector<HTMLDivElement>(".editor-input")!;
 const outputDom = document.querySelector<HTMLTextAreaElement>(".editor-output")!;
-const modeBtn = document.querySelector<HTMLButtonElement>("#modeBtn")!;
 const formatBtn = document.querySelector<HTMLButtonElement>("#formatBtn")!;
 
 let windowHeight = window.innerHeight;
@@ -114,54 +110,27 @@ function doFormat() {
   myCodeMirror.setValue(formatted);
 }
 
-let split: Split.Instance | null = null;
 let sizes = JSON.parse(localStorage.getItem('split-sizes') ?? "[33, 33, 33]");
 if (!Array.isArray(sizes) || sizes.length !== 3) {
   console.warn("Invalid split sizes", sizes);
   sizes = [33, 33, 33];
 }
 
-function makeResizable(wideMode: boolean) {
-  if (wideMode) {
-    split = Split(['.CodeMirror', '.editor-input', '.output-wrapper'], {
-      sizes,
-      onDragEnd: function (_sizes) {
-        sizes = _sizes;
-        localStorage.setItem('split-sizes', JSON.stringify(sizes))
-      },
-    })
-  } else {
-    if (split) {
-      split.destroy();
-    }
-  }
-}
-
 function wideMode() {
-  modeBtn.onclick = restore;
-  modeBtn.innerText = "Normal Mode";
-  inputDom.classList.add("wide-input");
-  editorDom.classList.add("wide-editor");
-  gridDom.classList.add("flex-editor");
-  const upperHeight = document.querySelector('#modeBtn')!.scrollHeight + 30;
-  gridDom.setAttribute('style', `height: ${windowHeight - upperHeight}px`);
-  myCodeMirror.setSize(null, outputDom.clientHeight - 20);
-  makeResizable(true);
+  myCodeMirror.setSize(null, outputDom.clientHeight);
+  Split(['.CodeMirror', '.editor-input', '.output-wrapper'], {
+    sizes,
+    onDragEnd: function (_sizes) {
+      sizes = _sizes;
+      localStorage.setItem('split-sizes', JSON.stringify(sizes))
+    },
+  })
   window.scrollTo(0, document.body.scrollHeight);
 }
 
-function restore() {
-  modeBtn.onclick = wideMode;
-  modeBtn.innerText = "Wide Mode";
-  inputDom.classList.remove("wide-input");
-  editorDom.classList.remove("wide-editor");
-  gridDom.classList.remove("flex-editor");
-  outputDom.setAttribute("rows", "7");
-  myCodeMirror.setSize(null, outputDom.clientHeight);
-  makeResizable(false);
-}
+// whne the document loads, enable wide mode
+wideMode();
 
-modeBtn.onclick = wideMode;
 formatBtn.onclick = doFormat;
 
 init().then(() => loaded = true);
